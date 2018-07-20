@@ -1,5 +1,17 @@
 git_plugin = self
 
+namespace :load do
+  task :defaults do
+    execute_keys = %w[rpush]
+    # Rbenv, Chruby, and RVM integration
+    set :rbenv_map_bins, fetch(:rbenv_map_bins).to_a.concat(execute_keys)
+    set :rvm_map_bins, fetch(:rvm_map_bins).to_a.concat(execute_keys)
+    set :chruby_map_bins, fetch(:chruby_map_bins).to_a.concat(execute_keys)
+    # Bundler integration
+    set :bundle_bins, fetch(:bundle_bins).to_a.concat(execute_keys)
+  end
+end
+
 namespace :rpush do
   desc 'Check if config file exists'
   task :check do
